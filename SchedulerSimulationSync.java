@@ -87,7 +87,12 @@ class SharedResources {
     public static void logExecution(String message) {
         // TODO: Protect this critical section with a lock
         // RACE CONDITION: ArrayList is not thread-safe!
+        logLock.lock();//Commit 4
+    try {
         executionLog.add(message);
+    } finally {
+        logLock.unlock();
+    }
     }
 }
 
